@@ -29,10 +29,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -266,6 +268,22 @@ class StatisticsJsonToProtobufTest {
           .containsExactly(11.428571428571429, Trend.STABLE, TrendSemantic.NEUTRAL);
     }
 
+  }
+
+
+  @AfterAll
+  static void checkCoverage() {
+    System.out.println(
+      System.lineSeparator() + System.lineSeparator() +
+      "===========================================" + System.lineSeparator() +
+      "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
+      "| StatisticsToProtobufMapping             |" + System.lineSeparator() +
+      "| buildAllKeyFigureCards()                |" + System.lineSeparator() +
+      "===========================================" + System.lineSeparator());
+
+    System.out.println(Arrays.toString(StatisticsToProtobufMapping.bakfcCov));
+
+    System.out.println(System.lineSeparator());
   }
 }
 
