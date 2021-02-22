@@ -87,7 +87,6 @@ class DiagnosisKeyTest {
     assertThatIllegalArgumentException()
         .isThrownBy(() -> diagnosisKey.isYoungerThanRetentionThreshold(daysToRetain));
   }
-
   @AfterAll
   static void checkCoverage() {
     System.out.println(
@@ -101,4 +100,29 @@ class DiagnosisKeyTest {
 
     System.out.println(System.lineSeparator());
   }
+
+  //Extra tests by Hallon, follows grammar above.
+
+  @Test
+  void testNullDoesNotEqual() {
+    assertThat(diagnosisKey.equals(null).isFalse);
+  }
+  @Test
+  void testSameObjectReturnsTrue() {
+    assertThat(diagnosisKey.equals(this));
+  }
+  @Test
+  void testVisitedCountriesGetter() {
+    assertThat(diagnosisKey.getVisitedCountries()).isEqualTo(visitedCountries);
+  }
+  @Test
+  void testReporttypeGetter() {
+    assertThat(diagnosisKey.getReportType()).isEqualTo(reportType);
+  }
+
+
+
+
+
+
 }
