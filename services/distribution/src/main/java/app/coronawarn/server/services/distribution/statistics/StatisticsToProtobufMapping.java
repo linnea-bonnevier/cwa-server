@@ -122,8 +122,18 @@ public class StatisticsToProtobufMapping {
     return LocalDate.parse(effectiveDate, formatter);
   }
 
+  public static int[] bakfcCov = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+  private static boolean bakfcCovVisit(int branch) {
+    bakfcCov[branch] = 1;
+
+    return true;
+  }
+
   @SuppressWarnings("checkstyle:Indentation")
   private List<KeyFigureCard> buildAllKeyFigureCards(List<StatisticsJsonStringObject> jsonStringObjects) {
+    // Branch 0
+    bakfcCovVisit(0);
     Map<Integer, Optional<KeyFigureCard>> figureCardMap = new HashMap<>();
 
     figureCardMap.put(INFECTIONS_CARD_ID, Optional.empty());
@@ -139,31 +149,52 @@ public class StatisticsToProtobufMapping {
     List<StatisticsJsonStringObject> collectedJsonObjects = new ArrayList<>();
 
     for (var stat : orderedList) {
+      // Branch 1
+      bakfcCovVisit(1);
       collectedJsonObjects.add(stat);
       getAllCardIdSequence().forEach(id -> {
         if (figureCardMap.get(id).isEmpty()) {
+          // Branch 2
+          bakfcCovVisit(2);
           KeyFigureCard card;
           try {
             card = keyFigureCardFactory.createKeyFigureCard(stat, id);
             logger.info("[{}] {} successfully created", stat.getEffectiveDate(), toCardName(id));
             figureCardMap.put(id, Optional.of(card));
           } catch (MissingPropertyException ex) {
+            // Branch 3
+            bakfcCovVisit(3);
             logger.warn("[{}] {}", stat.getEffectiveDate(), ex.getMessage());
           }
+        } else {
+          // Branch 4
+          bakfcCovVisit(4);
         }
       });
 
       if (figureCardMap.values().stream().allMatch(Optional::isPresent)) {
+        // Branch 5
+        bakfcCovVisit(5);
         break;
+      } else {
+        // Branch 6
+        bakfcCovVisit(6);
       }
     }
 
     if (logger.isDebugEnabled()) {
+      // Branch 7
+      bakfcCovVisit(7);
       logger.debug("The following statistics JSON entries were used to create the cards. Null values are omitted.");
       for (var stat: collectedJsonObjects) {
+        // Branch 8
+        bakfcCovVisit(8);
         var jsonString = SerializationUtils.stringifyObject(stat);
         logger.debug("[{}] {}", stat.getEffectiveDate(), jsonString);
       }
+    } else {
+      // Branch 9
+      bakfcCovVisit(9);
     }
 
     var emptyCard = keyFigureCardFactory.createKeyFigureCard(jsonStringObjects.get(0), EMPTY_CARD);
