@@ -206,24 +206,44 @@ public class DiagnosisKey {
     return VALIDATOR.validate(this);
   }
 
+
+  public static int[] bakfcCov = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+  private static boolean bakfcCovVisit(int branch) {
+    bakfcCov[branch] = 1;
+
+    return true;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
+      bakfcCovVisit(0);
       return true;
     }
     if (o == null || getClass() != o.getClass()) {
+      bakfcCovVisit(1);
       return false;
     }
     DiagnosisKey that = (DiagnosisKey) o;
     return rollingStartIntervalNumber == that.rollingStartIntervalNumber
+        && bakfcCovVisit(2)
         && rollingPeriod == that.rollingPeriod
+        && bakfcCovVisit(3)
         && transmissionRiskLevel == that.transmissionRiskLevel
+        && bakfcCovVisit(4)
         && submissionTimestamp == that.submissionTimestamp
+        && bakfcCovVisit(5)
         && Arrays.equals(keyData, that.keyData)
+        && bakfcCovVisit(6)
         && Objects.equals(originCountry, that.originCountry)
+        && bakfcCovVisit(7)
         && Objects.equals(visitedCountries, that.visitedCountries)
+        && bakfcCovVisit(8)
         && reportType == that.reportType
-        && daysSinceOnsetOfSymptoms == that.daysSinceOnsetOfSymptoms;
+        && bakfcCovVisit(9)
+        && daysSinceOnsetOfSymptoms == that.daysSinceOnsetOfSymptoms
+        && bakfcCovVisit(10);
   }
 
   @Override

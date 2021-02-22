@@ -87,4 +87,18 @@ class DiagnosisKeyTest {
     assertThatIllegalArgumentException()
         .isThrownBy(() -> diagnosisKey.isYoungerThanRetentionThreshold(daysToRetain));
   }
+
+  @AfterAll
+  static void checkCoverage() {
+    System.out.println(
+      System.lineSeparator() + System.lineSeparator() +
+      "===========================================" + System.lineSeparator() +
+      "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
+      "| DiagnosisKeyTest()                      |" + System.lineSeparator() +
+      "===========================================" + System.lineSeparator());
+
+    System.out.println(Arrays.toString(StatisticsToProtobufMapping.bakfcCov));
+
+    System.out.println(System.lineSeparator());
+  }
 }
