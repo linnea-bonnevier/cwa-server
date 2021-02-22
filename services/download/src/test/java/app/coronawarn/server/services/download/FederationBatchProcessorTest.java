@@ -37,10 +37,12 @@ import java.time.Period;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
+import java.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -508,5 +510,20 @@ class FederationBatchProcessorTest {
     verify(batchInfoService, times(1)).updateStatus(federationBatchInfo, expectedStatus);
     verify(diagnosisKeyService, times(1)).saveDiagnosisKeys(captor.capture());
     assertThat(captor.getValue()).isEmpty();
+  }
+
+  @AfterAll
+  static void checkCoverage() {
+    System.out.println(
+      System.lineSeparator() + System.lineSeparator() +
+      "===========================================" + System.lineSeparator() +
+      "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
+      "| FederationBatchProcessor                |" + System.lineSeparator() +
+      "| processBatchAndReturnNextBatchId()      |" + System.lineSeparator() +
+      "===========================================" + System.lineSeparator());
+
+    System.out.println(Arrays.toString(FederationBatchProcessor.bakfcCov));
+
+    System.out.println(System.lineSeparator());
   }
 }
