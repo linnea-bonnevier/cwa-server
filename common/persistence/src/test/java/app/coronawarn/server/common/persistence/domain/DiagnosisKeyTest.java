@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -86,5 +87,19 @@ class DiagnosisKeyTest {
   void testRetentionThresholdRejectsNegativeValue(int daysToRetain) {
     assertThatIllegalArgumentException()
         .isThrownBy(() -> diagnosisKey.isYoungerThanRetentionThreshold(daysToRetain));
+  }
+
+  @AfterAll
+  static void checkCoverage() {
+    System.out.println(
+      System.lineSeparator() + System.lineSeparator() +
+      "===========================================" + System.lineSeparator() +
+      "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
+      "| DiagnosisKeyTest()                      |" + System.lineSeparator() +
+      "===========================================" + System.lineSeparator());
+
+    System.out.println(Arrays.toString(DiagnosisKey.bakfcCov));
+
+    System.out.println(System.lineSeparator());
   }
 }
