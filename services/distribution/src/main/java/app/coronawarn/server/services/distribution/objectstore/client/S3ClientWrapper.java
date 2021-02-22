@@ -134,25 +134,48 @@ public class S3ClientWrapper implements ObjectStoreClient {
     throw new ObjectStoreOperationFailedException("Failed to get objects from object store", cause);
   }
 
+  public static int[] putCov = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+  private static boolean putCovVisit(int branch) {
+    putCov[branch] = 1;
+
+    return true;
+  }
+
   @Override
   @Retryable(
       value = SdkException.class,
       maxAttemptsExpression = "${services.distribution.objectstore.retry-attempts}",
       backoff = @Backoff(delayExpression = "${services.distribution.objectstore.retry-backoff}"))
   public void putObject(String bucket, String objectName, Path filePath, Map<HeaderKey, String> headers) {
+
+    putCovVisit(0); // Branch 0
+
     logRetryStatus("object upload");
     var requestBuilder = PutObjectRequest.builder().bucket(bucket).key(objectName);
     if (headers.containsKey(HeaderKey.AMZ_ACL)) {
+      putCovVisit(1); // Branch 1
       requestBuilder.acl(headers.get(HeaderKey.AMZ_ACL));
+    } else {
+      putCovVisit(2); // Branch 2
     }
     if (headers.containsKey(HeaderKey.CACHE_CONTROL)) {
+      putCovVisit(3); // Branch 3
       requestBuilder.cacheControl(headers.get(HeaderKey.CACHE_CONTROL));
+    } else {
+      putCovVisit(4); // Branch 4
     }
     if (headers.containsKey(HeaderKey.CWA_HASH)) {
+      putCovVisit(5); // Branch 5
       requestBuilder.metadata(Map.of(HeaderKey.CWA_HASH.withMetaPrefix(), headers.get(HeaderKey.CWA_HASH)));
+    } else {
+      putCovVisit(6); // Branch 6
     }
     if (headers.containsKey(HeaderKey.CONTENT_TYPE)) {
+      putCovVisit(7); // Branch 7
       requestBuilder.contentType(headers.get(HeaderKey.CONTENT_TYPE));
+    } else {
+      putCovVisit(8); // Branch 8
     }
 
     RequestBody bodyFile = RequestBody.fromFile(filePath);
