@@ -12,6 +12,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -97,7 +98,7 @@ class DiagnosisKeyTest {
       "| DiagnosisKeyTest()                      |" + System.lineSeparator() +
       "===========================================" + System.lineSeparator());
 
-    System.out.println(Arrays.toString(StatisticsToProtobufMapping.bakfcCov));
+    System.out.println(Arrays.toString(DiagnosisKey.bakfcCov));
 
     System.out.println(System.lineSeparator());
   }
