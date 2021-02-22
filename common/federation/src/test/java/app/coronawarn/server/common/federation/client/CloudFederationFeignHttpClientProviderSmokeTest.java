@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import app.coronawarn.server.common.federation.client.config.FederationGatewayConfig;
 import app.coronawarn.server.common.federation.client.config.FederationGatewayConfig.Ssl;
 import app.coronawarn.server.common.federation.client.hostname.DefaultHostnameVerifierProvider;
+import jdk.jfr.Timestamp;
+
 import java.io.File;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,34 @@ class CloudFederationFeignHttpClientProviderSmokeTest {
     CloudFederationFeignHttpClientProvider cut = new CloudFederationFeignHttpClientProvider(config,
         new DefaultHostnameVerifierProvider());
     assertThat(cut.createFeignClient()).isNotNull();
+  }
+
+  @Test
+  void testCertificate(){
+    Ssl ssl = new Ssl();
+    ssl.setCertificateDn("X.509");
+    assertThat(ssl.getCertificateDn(),is("X.509"));
+  }
+
+  @Test
+  void testCertificateSHA(){
+    Ssl ssl = new Ssl();
+    ssl.setCertificateSha("randomString123123");
+    assertThat(ssl.getCertificateSha(),is("randomString123123"));
+  }
+
+  @Test
+  void testGetBaseUrl(){
+    Ssl ssl = new Ssl();
+    ssl.setBaseUrl("https://github.com/cwa-server/tree/main");
+    assertThat(ssl.getBaseUrl().isNotNull());
+  }
+
+  @Test
+  void testGetCertificationType(){
+    Ssl ssl = new Ssl();
+    ssl.setCertificateType("PKCS12");
+    assertThat(ssl.getCertificateType(),is("PKCS12"));
   }
 
 }
