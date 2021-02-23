@@ -4,6 +4,7 @@ package app.coronawarn.server.services.submission.verification;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -27,5 +28,20 @@ class TanTest {
     Tan tan = Tan.of(tanString);
 
     assertThat(tan).isNotNull().hasToString(tanString);
+  }
+
+  @Test 
+  void equalsTestTan(){
+    UUID tanUUID= UUID.randomUUID();
+    Tan tan = new Tan(tanUUID);
+    Assertions.assertTrue(tan.equals(tan));
+    Assertions.assertFalse(tan.equals(null);)
+  }
+
+  @Test 
+  void hashTestTan(){
+    UUID tanUUID= UUID.randomUUID();
+    Tan tan = new Tan(tanUUID);
+    Assertions.assertEquals(Objects.hash(tan),tan.hashCode())
   }
 }
