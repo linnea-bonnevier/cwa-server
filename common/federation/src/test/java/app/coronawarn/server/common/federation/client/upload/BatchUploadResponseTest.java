@@ -29,6 +29,6 @@ class BatchUploadResponseTest {
     + "test"
     + ", status201="
     + "test"
-    + '}';)
+    + '}');
   }
 }
