@@ -1,5 +1,4 @@
 
-
 package app.coronawarn.server.services.distribution.assembly.appconfig.validation;
 
 import static app.coronawarn.server.services.distribution.assembly.appconfig.validation.ApplicationVersionConfigurationValidator.CONFIG_PREFIX;
@@ -14,7 +13,11 @@ import app.coronawarn.server.common.protocols.internal.KeyDownloadParametersAndr
 import app.coronawarn.server.services.distribution.assembly.appconfig.ApplicationConfigurationPublicationConfig;
 import app.coronawarn.server.services.distribution.assembly.appconfig.validation.ValidationError.ErrorType;
 import app.coronawarn.server.services.distribution.config.DistributionServiceConfig;
+
+import java.util.Arrays;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -201,5 +204,20 @@ class ApplicationVersionConfigurationValidatorTest {
     ApplicationVersionConfiguration appConfig = applicationConfigurationPublicationConfig
         .buildApplicationVersionConfiguration(distributionServiceConfig);
     return new ApplicationVersionConfigurationValidator(appConfig);
+  }
+
+  @AfterAll
+  static void checkCoverage() {
+    System.out.println(
+      System.lineSeparator() + System.lineSeparator() +
+      "===========================================" + System.lineSeparator() +
+      "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
+      "| ApplicationVersionConfigurationValidator|" + System.lineSeparator() +
+      "| compare()                               |" + System.lineSeparator() +
+      "===========================================" + System.lineSeparator());
+
+    System.out.println(Arrays.toString(ApplicationVersionConfigurationValidator.compareCov));
+
+    System.out.println(System.lineSeparator());
   }
 }

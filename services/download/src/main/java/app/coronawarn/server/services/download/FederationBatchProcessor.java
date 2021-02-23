@@ -76,6 +76,14 @@ public class FederationBatchProcessor {
     this.seenBatches = new HashSet<>();
   }
 
+  public static int[] bakfcCov = new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+  private static boolean bakfcCovVisit(int branch) {
+    bakfcCov[branch] = 1;
+
+    return true;
+  }
+
   /**
    * Checks if the date-based download logic is enabled and prepares the FederationBatchInfo Repository accordingly. The
    * Federation Batch Info stores information about which batches have already been processed to not download them
@@ -161,33 +169,58 @@ public class FederationBatchProcessor {
 
   private Optional<String> processBatchAndReturnNextBatchId(
       FederationBatchInfo batchInfo, FederationBatchStatus errorStatus) throws FatalFederationGatewayException {
+    // Branch 0
+    bakfcCovVisit(0);
+
     LocalDate date = batchInfo.getDate();
     String batchTag = batchInfo.getBatchTag();
     logger.info("Processing batch for date {} and batchTag {}.", date, batchTag);
     AtomicReference<Optional<String>> nextBatchTag = new AtomicReference<>(Optional.empty());
     try {
+      // Branch 1
+      bakfcCovVisit(1);
       BatchDownloadResponse response = federationGatewayDownloadService.downloadBatch(batchTag, date);
       AtomicBoolean batchContainsInvalidKeys = new AtomicBoolean(false);
       nextBatchTag.set(response.getNextBatchTag());
       response.getDiagnosisKeyBatch().ifPresentOrElse(batch -> {
+        // Branch 2
+        bakfcCovVisit(2);
         logger.info("Downloaded {} keys for date {} and batchTag {}.", batch.getKeysCount(), date, batchTag);
         if (config.isBatchAuditEnabled()) {
+          // Branch 3
+          bakfcCovVisit(3);
           federationGatewayDownloadService.auditBatch(batchTag, date);
+        } else {
+          // Branch 4
+          bakfcCovVisit(4);
         }
         List<DiagnosisKey> validDiagnosisKeys = extractValidDiagnosisKeysFromBatch(batch);
         int numOfInvalidKeys = batch.getKeysCount() - validDiagnosisKeys.size();
         if (numOfInvalidKeys > 0) {
+          // Branch 5
+          bakfcCovVisit(5);
           batchContainsInvalidKeys.set(true);
           logger.info("{} keys failed validation and were skipped.", numOfInvalidKeys);
+        } else {
+          // Branch 6
+          bakfcCovVisit(6);
         }
         int insertedKeys = diagnosisKeyService.saveDiagnosisKeys(validDiagnosisKeys);
         logger.info("Successfully inserted {} keys for date {} and batchTag {}.", insertedKeys, date, batchTag);
-      }, () -> logger.info("Batch for date {} and batchTag {} did not contain any keys.", date, batchTag));
+      }, () -> {
+        // Branch 7
+        bakfcCovVisit(7);
+        logger.info("Batch for date {} and batchTag {} did not contain any keys.", date, batchTag);
+      });
       batchInfoService.updateStatus(batchInfo, batchContainsInvalidKeys.get() ? PROCESSED_WITH_ERROR : PROCESSED);
       return nextBatchTag.get();
     } catch (FatalFederationGatewayException e) {
+      // Branch 8
+      bakfcCovVisit(8);
       throw e;
     } catch (Exception e) {
+      // Branch 9
+      bakfcCovVisit(9);
       logger.error(
           "Federation batch processing for date " + date + " and batchTag " + batchTag + " failed. Status set to "
               + errorStatus.name() + ".", e);

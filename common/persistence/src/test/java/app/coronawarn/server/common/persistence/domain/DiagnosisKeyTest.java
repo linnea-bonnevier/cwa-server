@@ -12,10 +12,12 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import app.coronawarn.server.common.protocols.external.exposurenotification.ReportType;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
@@ -90,7 +92,19 @@ class DiagnosisKeyTest {
   }
 
 
-  //Extra tests by Hallon, follows grammar above.
+  @AfterAll
+  static void checkCoverage() {
+    System.out.println(
+      System.lineSeparator() + System.lineSeparator() +
+      "===========================================" + System.lineSeparator() +
+      "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
+      "| DiagnosisKeyTest()                      |" + System.lineSeparator() +
+      "===========================================" + System.lineSeparator());
+
+    System.out.println(Arrays.toString(DiagnosisKey.bakfcCov));
+
+    System.out.println(System.lineSeparator());
+  }
 
   @Test
   void testNullDoesNotEqual() {

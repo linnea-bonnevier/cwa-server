@@ -17,10 +17,12 @@ import app.coronawarn.server.services.distribution.objectstore.client.ObjectStor
 import app.coronawarn.server.services.distribution.statistics.exceptions.NotModifiedException;
 import java.io.ByteArrayInputStream;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -365,5 +367,20 @@ class S3ClientWrapperTest {
     assertThatExceptionOfType(ExhaustedRetryException.class)
         .isThrownBy(() -> s3ClientWrapper.getSingleObjectContent("", "", "etag"))
         .withCauseExactlyInstanceOf(cause);
+  }
+
+  @AfterAll
+  static void checkCoverage() {
+    System.out.println(
+      System.lineSeparator() + System.lineSeparator() +
+      "===========================================" + System.lineSeparator() +
+      "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
+      "| S3ClientWrapper                         |" + System.lineSeparator() +
+      "| putObject()                             |" + System.lineSeparator() +
+      "===========================================" + System.lineSeparator());
+
+    System.out.println(Arrays.toString(S3ClientWrapper.putCov));
+
+    System.out.println(System.lineSeparator());
   }
 }
