@@ -11,6 +11,44 @@ import org.junit.Test;
 
 public class SubmissionServiceConfigTest {
   @Test
+  void testPayload() {
+    SubmissionServiceConfig config = new SubmissionServiceConfig();
+
+    SubmissionServiceConfig.Payload payload = new SubmissionServiceConfig.Payload();
+    config.setPayload(payload);
+
+    int maxNumberOfKeys = 1;
+    String[] supportedCountries = new String[]{"DE"};
+    String defaultOriginCountry = "DE";
+
+    payload.setMaxNumberOfKeys(maxNumberOfKeys);
+    payload.setSupportedCountries(supportedCountries);
+    payload.setDefaultOriginCountry(defaultOriginCountry);
+
+    assertThat(payload.getMaxNumberOfKeys()).isEqualTo(maxNumberOfKeys);
+    assertThat(payload.getSupportedCountries()).isEqualTo(supportedCountries);
+    assertThat(payload.getDefaultOriginCountry()).isEqualTo(defaultOriginCountry);
+    assertThat(config.getMaxNumberOfKeys()).isEqualTo(maxNumberOfKeys);
+    assertThat(config.getSupportedCountries()).isEqualTo(supportedCountries);
+    assertThat(config.getDefaultOriginCountry()).isEqualTo(defaultOriginCountry);
+  }
+
+  @Test
+  void testPayloadIndirect() {
+    SubmissionServiceConfig config = new SubmissionServiceConfig();
+
+    SubmissionServiceConfig.Payload payload = new SubmissionServiceConfig.Payload();
+    config.setPayload(payload);
+
+    String[] supportedCountries = new String[]{"DE"};
+
+    config.setSupportedCountries(supportedCountries);
+
+    assertThat(config.getSupportedCountries()).isEqualTo(supportedCountries);
+    assertThat(config.getSupportedCountries()).isEqualTo(supportedCountries);
+  }
+
+  @Test
   void testClient() {
     SubmissionServiceConfig config = new SubmissionServiceConfig();
 
