@@ -17,4 +17,18 @@ class BatchUploadResponseTest {
     assertThat(batchUploadResponse.getStatus409()).isEmpty();
     assertThat(batchUploadResponse.getStatus500()).isEmpty();
   }
+
+  @Test 
+  void toStringTestBatchUploadResponse(){
+    List<String> status = Arrays.asList("test");
+    BatchUploadResponse batchUploadResponse = new BatchUploadResponse(status,status,status);
+    assertThat(batchUploadResponse.toString()).isEqualTo("BatchUploadResponse{"
+    + "status409="
+    + "test"
+    + ", status500="
+    + "test"
+    + ", status201="
+    + "test"
+    + '}';)
+  }
 }
