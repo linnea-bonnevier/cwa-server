@@ -40,8 +40,13 @@ class TanTest {
 
   @Test 
   void hashTestTan(){
-    UUID tanUUID= UUID.randomUUID();
-    Tan tan = Tan.of(tanUUID.toString());
-    assertThat(Objects.hash(tan)).isEqualTo(tan.hashCode());
+    UUID tanUUID1= UUID.randomUUID();
+    UUID tanUUID2 = UUID.randomUUID();
+    while(tanUUID2 == tanUUID1){
+        tanUUID2 = UUID.randomUUID();
+    }
+    Tan tan1 = Tan.of(tanUUID1.toString());
+    Tan tan2 = Tan.of(tanUUID2.toString());
+    assertThat(tan1.hashCode()).isNotEqualTo(tan2.hashCode());
   }
 }
