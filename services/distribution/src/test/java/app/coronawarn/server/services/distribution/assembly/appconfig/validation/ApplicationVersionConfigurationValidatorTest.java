@@ -204,20 +204,4 @@ class ApplicationVersionConfigurationValidatorTest {
         .buildApplicationVersionConfiguration(distributionServiceConfig);
     return new ApplicationVersionConfigurationValidator(appConfig);
   }
-
-
-@AfterAll
-static void checkCoverage() {
-  System.out.println(
-    System.lineSeparator() + System.lineSeparator() +
-    "===========================================" + System.lineSeparator() +
-    "| DD2480 COVERAGE TOOL                    |" + System.lineSeparator() +
-    "| ApplicationVersionConfigurationValidator|" + System.lineSeparator() +
-    "| compare()                               |" + System.lineSeparator() +
-    "===========================================" + System.lineSeparator());
-
-  System.out.println(Arrays.toString(ApplicationVersionConfigurationValidator.compareCov));
-
-  System.out.println(System.lineSeparator());
-}
 }
