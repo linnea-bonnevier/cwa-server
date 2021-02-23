@@ -35,26 +35,25 @@ public class ApplicationVersionConfigurationValidator extends ConfigurationValid
     }
   }
 
-  private ComparisonResult compare(SemanticVersion left, SemanticVersion right) {
-    if (left.getMajor() < right.getMajor()) {
+  private ComparisonResult comparePart(int left, int right) {
+    if (left < right) {
       return ComparisonResult.LOWER;
     }
-    if (left.getMajor() > right.getMajor()) {
-      return ComparisonResult.HIGHER;
-    }
-    if (left.getMinor() < right.getMinor()) {
-      return ComparisonResult.LOWER;
-    }
-    if (left.getMinor() > right.getMinor()) {
-      return ComparisonResult.HIGHER;
-    }
-    if (left.getPatch() < right.getPatch()) {
-      return ComparisonResult.LOWER;
-    }
-    if (left.getPatch() > right.getPatch()) {
+    if (right < left) {
       return ComparisonResult.HIGHER;
     }
     return ComparisonResult.EQUAL;
+  }
+
+  private ComparisonResult compare(SemanticVersion left, SemanticVersion right) {
+    ComparisonResult compareMajor = comparePart(left.getMajor(), right.getMajor());
+    ComparisonResult compareMinor = comparePart(left.getMinor(), right.getMinor());
+    ComparisonResult comparePatch = comparePart(left.getPatch(), right.getPatch());
+
+    return compareMajor != ComparisonResult.EQUAL ? compareMajor
+         : compareMinor != ComparisonResult.EQUAL ? compareMinor
+         : comparePatch != ComparisonResult.EQUAL ? comparePatch
+         : ComparisonResult.EQUAL;
   }
 
   private enum ComparisonResult {
