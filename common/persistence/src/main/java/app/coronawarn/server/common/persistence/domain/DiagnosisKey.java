@@ -224,7 +224,7 @@ public class DiagnosisKey {
         && Objects.equals(originCountry, that.originCountry)
         && Objects.equals(visitedCountries, that.visitedCountries)
         && reportType == that.reportType
-        && daysSinceOnsetOfSymptoms == that.daysSinceOnsetOfSymptoms
+        && daysSinceOnsetOfSymptoms == that.daysSinceOnsetOfSymptoms;
   }
 
   @Override
