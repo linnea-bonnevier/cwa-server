@@ -98,7 +98,7 @@ class DiagnosisKeyTest {
   }
   @Test
   void testSameObjectReturnsTrue() {
-    assertThat(diagnosisKey.equals(this)).isTrue();
+    assertThat(diagnosisKey.equals(diagnosisKey)).isTrue();
   }
   @Test
   void testVisitedCountriesGetter() {
