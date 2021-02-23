@@ -34,6 +34,7 @@ public class ApplicationVersionConfigurationValidator extends ConfigurationValid
           minVersion.getMajor() + "." + minVersion.getMinor() + "." + minVersion.getPatch(), MIN_GREATER_THAN_MAX));
     }
   }
+  
   private ComparisonResult compare(SemanticVersion left, SemanticVersion right) {
     if (left.getMajor() < right.getMajor()) {
       return ComparisonResult.LOWER;
