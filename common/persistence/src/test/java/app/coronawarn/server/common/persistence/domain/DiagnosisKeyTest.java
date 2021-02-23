@@ -94,11 +94,11 @@ class DiagnosisKeyTest {
 
   @Test
   void testNullDoesNotEqual() {
-    assertThat(diagnosisKey.equals(null)).isFalse;
+    assertThat(diagnosisKey.equals(null)).isFalse();
   }
   @Test
   void testSameObjectReturnsTrue() {
-    assertThat(diagnosisKey.equals(this)).isTrue;
+    assertThat(diagnosisKey.equals(this)).isTrue();
   }
   @Test
   void testVisitedCountriesGetter() {
