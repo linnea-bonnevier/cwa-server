@@ -46,9 +46,9 @@ class CloudFederationFeignHttpClientProviderSmokeTest {
 
   @Test
   void testGetBaseUrl(){
-    Ssl ssl = new Ssl();
-    ssl.setBaseUrl("https://github.com/cwa-server/tree/main");
-    assertThat(ssl.getBaseUrl()).isNotNull();
+    FederationGatewayConfig config = new FederationGatewayConfig();
+    config.setBaseUrl("https://github.com/cwa-server/tree/main");
+    assertThat(config.getBaseUrl()).isNotNull();
   }
 
   @Test
