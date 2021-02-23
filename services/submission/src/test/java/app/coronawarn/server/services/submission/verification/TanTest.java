@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import java.util.Objects;
 
 class TanTest {
 
@@ -32,7 +33,7 @@ class TanTest {
   @Test 
   void equalsTestTan(){
     UUID tanUUID= UUID.randomUUID();
-    Tan tan = new Tan(tanUUID);
+    Tan tan = Tan.of(tanUUID.toString());
     assertThat(tan.equals(tan)).isTrue();
     assertThat(tan.equals(null)).isFalse();
   }
@@ -40,7 +41,7 @@ class TanTest {
   @Test 
   void hashTestTan(){
     UUID tanUUID= UUID.randomUUID();
-    Tan tan = new Tan(tanUUID);
+    Tan tan = Tan.of(tanUUID.toString());
     assertThat(Objects.hash(tan)).isEqualTo(tan.hashCode());
   }
 }
