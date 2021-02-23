@@ -155,7 +155,8 @@ public class S3ClientWrapper implements ObjectStoreClient {
 
     doIfContains(headers, HeaderKey.AMZ_ACL, (header) -> requestBuilder.acl(header));
     doIfContains(headers, HeaderKey.CACHE_CONTROL, (header) -> requestBuilder.cacheControl(header));
-    doIfContains(headers, HeaderKey.CWA_HASH, (header) -> requestBuilder.metadata(Map.of(HeaderKey.CWA_HASH.withMetaPrefix(), header)));
+    doIfContains(headers, HeaderKey.CWA_HASH,
+        (header) -> requestBuilder.metadata(Map.of(HeaderKey.CWA_HASH.withMetaPrefix(), header)));
     doIfContains(headers, HeaderKey.CONTENT_TYPE, (header) -> requestBuilder.contentType(header));
 
     RequestBody bodyFile = RequestBody.fromFile(filePath);
