@@ -134,6 +134,16 @@ public class S3ClientWrapper implements ObjectStoreClient {
     throw new ObjectStoreOperationFailedException("Failed to get objects from object store", cause);
   }
 
+  interface StringFunction {
+    void run(String str);
+  }
+
+  private void doIfContains(Map<HeaderKey, String> headers, HeaderKey key, StringFunction f) {
+    if (headers.containsKey(key)) {
+      f.run(headers.get(key));
+    }
+  }
+
   @Override
   @Retryable(
       value = SdkException.class,
@@ -142,18 +152,12 @@ public class S3ClientWrapper implements ObjectStoreClient {
   public void putObject(String bucket, String objectName, Path filePath, Map<HeaderKey, String> headers) {
     logRetryStatus("object upload");
     var requestBuilder = PutObjectRequest.builder().bucket(bucket).key(objectName);
-    if (headers.containsKey(HeaderKey.AMZ_ACL)) {
-      requestBuilder.acl(headers.get(HeaderKey.AMZ_ACL));
-    }
-    if (headers.containsKey(HeaderKey.CACHE_CONTROL)) {
-      requestBuilder.cacheControl(headers.get(HeaderKey.CACHE_CONTROL));
-    }
-    if (headers.containsKey(HeaderKey.CWA_HASH)) {
-      requestBuilder.metadata(Map.of(HeaderKey.CWA_HASH.withMetaPrefix(), headers.get(HeaderKey.CWA_HASH)));
-    }
-    if (headers.containsKey(HeaderKey.CONTENT_TYPE)) {
-      requestBuilder.contentType(headers.get(HeaderKey.CONTENT_TYPE));
-    }
+
+    doIfContains(headers, HeaderKey.AMZ_ACL, (header) -> requestBuilder.acl(header));
+    doIfContains(headers, HeaderKey.CACHE_CONTROL, (header) -> requestBuilder.cacheControl(header));
+    doIfContains(headers, HeaderKey.CWA_HASH,
+        (header) -> requestBuilder.metadata(Map.of(HeaderKey.CWA_HASH.withMetaPrefix(), header)));
+    doIfContains(headers, HeaderKey.CONTENT_TYPE, (header) -> requestBuilder.contentType(header));
 
     RequestBody bodyFile = RequestBody.fromFile(filePath);
     s3Client.putObject(requestBuilder.build(), bodyFile);
