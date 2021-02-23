@@ -215,6 +215,10 @@ public class DiagnosisKey {
       return false;
     }
     DiagnosisKey that = (DiagnosisKey) o;
+    return compareAttributeDiagnosisKey(that);
+  }
+
+  private boolean compareAttributeDiagnosisKey(DiagnosisKey that) {
     return rollingStartIntervalNumber == that.rollingStartIntervalNumber
         && rollingPeriod == that.rollingPeriod
         && transmissionRiskLevel == that.transmissionRiskLevel
