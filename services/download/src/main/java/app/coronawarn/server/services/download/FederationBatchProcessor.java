@@ -190,7 +190,7 @@ public class FederationBatchProcessor {
           // Branch 3
           bakfcCovVisit(3);
           federationGatewayDownloadService.auditBatch(batchTag, date);
-        }else{
+        } else {
           // Branch 4
           bakfcCovVisit(4);
         }
@@ -201,7 +201,7 @@ public class FederationBatchProcessor {
           bakfcCovVisit(5);
           batchContainsInvalidKeys.set(true);
           logger.info("{} keys failed validation and were skipped.", numOfInvalidKeys);
-        }else{
+        } else {
           // Branch 6
           bakfcCovVisit(6);
         }
@@ -210,8 +210,8 @@ public class FederationBatchProcessor {
       }, () -> {
         // Branch 7
         bakfcCovVisit(7);
-        logger.info("Batch for date {} and batchTag {} did not contain any keys.", date, batchTag));
-      }
+        logger.info("Batch for date {} and batchTag {} did not contain any keys.", date, batchTag);
+      });
       batchInfoService.updateStatus(batchInfo, batchContainsInvalidKeys.get() ? PROCESSED_WITH_ERROR : PROCESSED);
       return nextBatchTag.get();
     } catch (FatalFederationGatewayException e) {
