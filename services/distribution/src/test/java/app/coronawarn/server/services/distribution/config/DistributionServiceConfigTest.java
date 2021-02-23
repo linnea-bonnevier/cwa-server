@@ -196,6 +196,20 @@ class DistributionServiceConfigTest {
               .getOverallTimeoutInSeconds());
     }
   }
+  @Test 
+  void testClassPath(){
+    DistributionServiceConfig.Paths p = new DistributionServiceConfig.Paths();
+    p.setOutput("Test");
+    assertThat(p.getOutput()).isEqualTo("Test");
+  }
+
+  @Test
+  void testClassApi(){
+    DistributionServiceConfig.Api api = new DistributionServiceConfig.Api();
+    api.setStatisticsFileName("Test");
+    assertThat(api.getStatisticsFileName()).isEqualTo("Test");
+
+  }
 
   @Nested
   class AndroidKeyDownloadParametersTest {
