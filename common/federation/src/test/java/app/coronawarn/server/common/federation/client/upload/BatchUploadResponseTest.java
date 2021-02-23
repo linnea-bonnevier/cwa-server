@@ -26,11 +26,11 @@ class BatchUploadResponseTest {
     BatchUploadResponse batchUploadResponse = new BatchUploadResponse(status,status,status);
     assertThat(batchUploadResponse.toString()).isEqualTo("BatchUploadResponse{"
     + "status409="
-    + "test"
+    + status
     + ", status500="
-    + "test"
+    + status
     + ", status201="
-    + "test"
+    + status
     + '}');
   }
 }
