@@ -18,6 +18,7 @@ import java.util.Set;
 import app.coronawarn.server.common.protocols.external.exposurenotification.ReportType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -87,4 +88,30 @@ class DiagnosisKeyTest {
     assertThatIllegalArgumentException()
         .isThrownBy(() -> diagnosisKey.isYoungerThanRetentionThreshold(daysToRetain));
   }
+
+
+  //Extra tests by Hallon, follows grammar above.
+
+  @Test
+  void testNullDoesNotEqual() {
+    assertThat(diagnosisKey.equals(null)).isFalse();
+  }
+  @Test
+  void testSameObjectReturnsTrue() {
+    assertThat(diagnosisKey.equals(diagnosisKey)).isTrue();
+  }
+  @Test
+  void testVisitedCountriesGetter() {
+    assertThat(diagnosisKey.getVisitedCountries()).isEqualTo(visitedCountries);
+  }
+  @Test
+  void testReporttypeGetter() {
+    assertThat(diagnosisKey.getReportType()).isEqualTo(reportType);
+  }
+
+
+
+
+
+
 }
