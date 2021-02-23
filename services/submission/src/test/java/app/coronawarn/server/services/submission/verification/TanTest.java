@@ -28,4 +28,19 @@ class TanTest {
 
     assertThat(tan).isNotNull().hasToString(tanString);
   }
+
+  @Test 
+  void equalsTestTan(){
+    UUID tanUUID= UUID.randomUUID();
+    Tan tan = new Tan(tanUUID);
+    assertThat(tan.equals(tan)).isTrue();
+    assertThat(tan.equals(null)).isFalse();
+  }
+
+  @Test 
+  void hashTestTan(){
+    UUID tanUUID= UUID.randomUUID();
+    Tan tan = new Tan(tanUUID);
+    assertThat(Objects.hash(tan)).isEqualTo(tan.hashCode());
+  }
 }
